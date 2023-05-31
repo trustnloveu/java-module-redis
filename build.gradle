@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'kr.co.ejyang'
+version = '1.0'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // spring test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // spring
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    annotationProcessor 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // data
+    implementation 'org.apache.commons:commons-lang3:3.10'
+//    implementation 'net.sf.json-lib:json-lib:2.4'
+    implementation 'org.json:json:20230227'
+
+    // redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'redis.clients:jedis:3.3.0'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    enabled = true
+}
+
+bootJar {
+    enabled = false
+}
