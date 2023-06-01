@@ -20,6 +20,7 @@ public class RedisConfig {
     private final int port;
     private final long ttl;
 
+    // 생성자
     RedisConfig(
         @Value("${redis.ip}") String ip,
         @Value("${redis.port}") int port,
@@ -32,6 +33,9 @@ public class RedisConfig {
     }
 
 
+    /*******************************************************************************************
+     * 템플릿
+     *******************************************************************************************/
     @Bean
     public RedisTemplate<String, Object> redisTemplate() {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
@@ -45,11 +49,17 @@ public class RedisConfig {
         return template;
     }
 
+    /*******************************************************************************************
+     * Connection 설정
+     *******************************************************************************************/
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
         return new LettuceConnectionFactory(ip, port);
     }
 
+    /*******************************************************************************************
+     * Pool 설정
+     *******************************************************************************************/
     @Bean
     public JedisPoolConfig jedisPoolConfig() {
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
@@ -57,9 +67,9 @@ public class RedisConfig {
         jedisPoolConfig.setMinIdle(1000);
         jedisPoolConfig.setTestOnBorrow(true);
         jedisPoolConfig.setTestOnReturn(true);
-        jedisPoolConfig.setMaxTotal(1000); // 커넥션풀 최대 생성값 설정 ( default = 8)
-        jedisPoolConfig.setBlockWhenExhausted(true); // 커넥션풀이 가득 찼을 경우 > 준비된 연결 도착 대기
-        jedisPoolConfig.setBlockWhenExhausted(false); // 커넥션풀이 가득 찼을 경우 > 새로운 연결을 기다리지 않고 NoSuchElementException 예외 발생
+        jedisPoolConfig.setMaxTotal(1000);              // 커넥션풀 최대 생성값 설정 ( default = 8)
+        jedisPoolConfig.setBlockWhenExhausted(true);    // 커넥션풀이 가득 찼을 경우 > 준비된 연결 도착 대기
+        jedisPoolConfig.setBlockWhenExhausted(false);   // 커넥션풀이 가득 찼을 경우 > 새로운 연결을 기다리지 않고 NoSuchElementException 예외 발생
         return jedisPoolConfig;
     }
 }
